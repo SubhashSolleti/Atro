@@ -4,8 +4,9 @@ import numpy as np
 import pandas as pd
 from statistics import mode
 import discord
+import time
 
-
+from discord_msg import send_message
 # Disable scientific notation for clarity
 np.set_printoptions(suppress=True)
 
@@ -68,6 +69,7 @@ while True:
 
     # Listen to the keyboard for presses.
     keyboard_input = cv2.waitKey(1)
+    print("Confidance: ", SC)
 
     x = x + 1
     # 27 is the ASCII for the esc key on your keyboard.
@@ -85,28 +87,18 @@ print(ID[2:], "\n")
 for i in range(len(df)):
     if df.iloc[i][0] == ID[2:]:
         if SC > 60:
-            print('Student ID:\t ', df.iloc[i][0][2:])
-            print('Name:\t', df.iloc[i][1])
-            print('Lab:\t ', df.iloc[i][2])
-            print('Role:\t ', df.iloc[i][3])
-            print('Discord ID:\t ', df.iloc[i][4])
+            print("Student ID: ", df.iloc[i][0][2:])
+            print("Name: ", df.iloc[i][1])
+            print("Lab: ", df.iloc[i][2])
+            print("Role: ", df.iloc[i][3])
+            print("Discord ID: ", df.iloc[i][4])
             break
         else:
-            intr = 1
+            print('Intruder')
+            break
 
-if intr == 1:
-    print('Intruder')
-
-
-# TOKEN = 'MTA3ODczMDEyODk1NzM3ODY0Mg.GuuVCW.GQtNyNkPNLdCOgJEegdpcm_4kvRrZfjjrLr1QA'
-# status = 'member'
-# client = discord.Client()
-
-# @client.event
-# async def on_ready():
-#     channel = client.get_channel(1078722332446707762)
-#     await channel.send('A lab member has entered the lab')
-#     client.run(TOKEN)
 
 camera.release()
 cv2.destroyAllWindows()
+time.sleep(2)
+send_message(df.iloc[i][4])
